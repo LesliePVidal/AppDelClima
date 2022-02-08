@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,8 +101,8 @@ public class PrincipalFragment extends Fragment {
         return vista;
     }
 
-    private void showDailyForecast() {
-        String tempUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=32.6469&lon=-115.446&exclude=hourly,minutely,current&units=metric&appid="+key;
+    private void showDailyForecast(Double lat, Double lon) {
+        String tempUrl = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly,minutely,current&units=metric&appid="+key;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -112,12 +113,13 @@ public class PrincipalFragment extends Fragment {
                     JSONArray daily = jsonResponse.getJSONArray(ListadoJSON.DAILY);
                     for (int i = 0; i < 6; i++) {
                         JSONObject jsonObject = daily.getJSONObject(i);
+                        Log.d("Array", jsonObject.toString());
                         Long date = jsonObject.getLong(ListadoJSON.DT)*1000;
                         Locale spanish = new Locale("ES", "ES");
                         DateFormat dateFormat = new SimpleDateFormat("EEEE", spanish);
                         dateFormat.setTimeZone(TimeZone.getTimeZone(timezone));
                         String temp = jsonObject.getJSONObject(ListadoJSON.TEMP).getInt(ListadoJSON.DAY)+"°C";
-                        listDatos.add(new Clima("Mexicali",dateFormat.format(date), temp));
+                        listDatos.add(new Clima(nombre,dateFormat.format(date), temp));
                     }
                     adapter = new AdapterClima(listDatos);
                     recyclerView.setAdapter(adapter);
@@ -143,9 +145,12 @@ public class PrincipalFragment extends Fragment {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     JSONObject jsonObjectMain = jsonResponse.getJSONObject(ListadoJSON.MAIN);
+                    JSONObject jsonObjectCoord = jsonResponse.getJSONObject(ListadoJSON.COORD);
+                    Double lat = jsonObjectCoord.getDouble(ListadoJSON.LAT);
+                    Double lon = jsonObjectCoord.getDouble(ListadoJSON.LON);
                     String temp = jsonObjectMain.getInt(ListadoJSON.TEMP)+"°C";
                     temperatura.setText(temp);
-                    showDailyForecast();
+                    showDailyForecast(lat, lon);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

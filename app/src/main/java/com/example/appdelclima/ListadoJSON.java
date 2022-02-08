@@ -2,6 +2,7 @@ package com.example.appdelclima;
 
 public class ListadoJSON {
     public static final String NAME="name";
+    public static final String COORD="coord";
     public static final String DAILY="daily";
     public static final String DT="dt";
     public static final String TIMEZONE="timezone";

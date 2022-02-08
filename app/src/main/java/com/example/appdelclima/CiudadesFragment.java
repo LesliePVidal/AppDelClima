@@ -112,8 +112,8 @@ public class CiudadesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 PrincipalFragment principalFragment = new PrincipalFragment(listDatos.get(recyclerView.getChildAdapterPosition(view)).getNombre());
-                getActivity().getSupportFragmentManager().beginTransaction().
-                        replace(R.id.layoutCiudades, principalFragment).commit();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.layoutCiudades, principalFragment).addToBackStack(null).commit();
             }
         });
         return vista;
