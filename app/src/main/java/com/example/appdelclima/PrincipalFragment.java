@@ -46,11 +46,17 @@ public class PrincipalFragment extends Fragment {
     public String key = "dec0ab6d6f7fed077cbcb4df58b2680f";
     ArrayList<Clima> listDatos;
     AdapterClima adapter;
+    String nombre;
     RecyclerView recyclerView;
-    TextView temperatura;
+    TextView temperatura, ciudad;
 
     public PrincipalFragment() {
         // Required empty public constructor
+        this.nombre = "Mexicali";
+    }
+
+    public PrincipalFragment(String nombre) {
+        this.nombre = nombre;
     }
 
     /**
@@ -86,8 +92,10 @@ public class PrincipalFragment extends Fragment {
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_principal, container, false);
         temperatura = vista.findViewById(R.id.txtTemperatura);
+        ciudad = vista.findViewById(R.id.ciudad);
+        ciudad.setText(nombre);
         recyclerView = vista.findViewById(R.id.recyclerView);
-        showClimaTodayNow();
+        showClimaTodayNow(nombre);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return vista;
     }
@@ -127,8 +135,8 @@ public class PrincipalFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void showClimaTodayNow() {
-        String tempUrl = "http://api.openweathermap.org/data/2.5/weather?q=Mexicali&units=metric&appid="+key;
+    private void showClimaTodayNow(String nombre) {
+        String tempUrl = "http://api.openweathermap.org/data/2.5/weather?q="+nombre+"&units=metric&appid="+key;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

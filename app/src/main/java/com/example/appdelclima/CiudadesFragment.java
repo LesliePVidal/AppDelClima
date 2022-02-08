@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +32,11 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,6 +98,7 @@ public class CiudadesFragment extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_ciudades, container, false);
         leerArchivo();
         recyclerView = vista.findViewById(R.id.recyclerViewCiudad);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         agregar = vista.findViewById(R.id.btnAgregar);
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +108,14 @@ public class CiudadesFragment extends Fragment {
         });
         adapter = new AdapterCiudades(listDatos);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PrincipalFragment principalFragment = new PrincipalFragment(listDatos.get(recyclerView.getChildAdapterPosition(view)).getNombre());
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        replace(R.id.layoutCiudades, principalFragment).commit();
+            }
+        });
         return vista;
     }
 
@@ -209,39 +222,4 @@ public class CiudadesFragment extends Fragment {
             }
         }
     }
-
-    /*private void showDailyForecast() {
-        String tempUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=32.6469&lon=-115.446&units=metric&appid="+key;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    listDatos = new ArrayList<>();
-                    JSONObject jsonResponse = new JSONObject(response);
-                    String timezone =jsonResponse.getString(ListadoJSON.TIMEZONE);
-                    JSONArray daily = jsonResponse.getJSONArray(ListadoJSON.DAILY);
-                    for (int i = 0; i < 6; i++) {
-                        JSONObject jsonObject = daily.getJSONObject(i);
-                        Long date = jsonObject.getLong(ListadoJSON.DT)*1000;
-                        Locale spanish = new Locale("ES", "ES");
-                        DateFormat dateFormat = new SimpleDateFormat("EEEE", spanish);
-                        dateFormat.setTimeZone(TimeZone.getTimeZone(timezone));
-                        String temp = jsonObject.getJSONObject(ListadoJSON.TEMP).getInt(ListadoJSON.DAY)+"°C";
-                        listDatos.add(new Clima("Mexicali",dateFormat.format(date), temp));
-                    }
-                    adapter = new AdapterClima(listDatos);
-                    recyclerView.setAdapter(adapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),error.toString().trim(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
-    }*/
 }
