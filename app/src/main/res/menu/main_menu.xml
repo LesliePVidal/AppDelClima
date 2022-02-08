@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/principal"
+        android:title="Principal"
+        android:icon="@drawable/ic_principal"/>
+    <item android:id="@+id/busqueda"
+        android:title="Busqueda"
+        android:icon="@drawable/ic_search"/>
+    <item android:id="@+id/ciudadesTop"
+        android:title="Ciudades"
+        android:icon="@drawable/ic_ciudades"/>
+</menu>

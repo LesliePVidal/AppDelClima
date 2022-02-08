@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/drawable/ic_Home_background.xml" value="0.22763157894736843" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/drawable/ic_add.xml" value="0.17850877192982456" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/drawable/ic_ciudadesTop_background.xml" value="0.12324561403508771" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/drawable/ic_ciudadesTop_foreground.xml" value="0.22467532467532467" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/drawable/ic_home_foreground.xml" value="0.12324561403508771" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/activity_main.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/activity_main2.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/activity_pantalla.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/activity_splash_screen.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/dialog_agregar.xml" value="0.1649122807017544" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/fragment_ciudades.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/fragment_principal.xml" value="0.264" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/fragment_search.xml" value="0.2824427480916031" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/item_busqueda.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/item_ciudades.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/layout/item_list.xml" value="0.264" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/menu/main_menu.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/mipmap-anydpi-v26/ic_home.xml" value="0.12324561403508771" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/mipmap-anydpi-v26/ic_principal.xml" value="0.22763157894736843" />
+        <entry key="..\:/Users/leska/AndroidStudioProjects/AppDelClima/app/src/main/res/xml/network_security_config.xml" value="0.21403508771929824" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.264" />
+      </ProjectState>
+    </option>
+  </component>
+</project>
