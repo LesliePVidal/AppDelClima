@@ -18,19 +18,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        showSelectedFragment(new principalFragment());
+        showSelectedFragment(new PrincipalFragment());
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.botonNavegacion);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId()== R.id.principal){
-                    showSelectedFragment(new principalFragment());
+                    showSelectedFragment(new PrincipalFragment());
                 }
                 if(item.getItemId()== R.id.ciudadesTop){
-                    showSelectedFragment(new ciudadesFragment());
+                    showSelectedFragment(new CiudadesFragment());
                 }
                 if(item.getItemId()== R.id.busqueda){
-                    showSelectedFragment(new searchFragment());
+                    showSelectedFragment(new SearchFragment());
                 }
                 return true;
             }

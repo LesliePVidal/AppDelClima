@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +31,10 @@ import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link principalFragment#newInstance} factory method to
+ * Use the {@link PrincipalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class principalFragment extends Fragment {
+public class PrincipalFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -50,7 +49,7 @@ public class principalFragment extends Fragment {
     RecyclerView recyclerView;
     TextView temperatura;
 
-    public principalFragment() {
+    public PrincipalFragment() {
         // Required empty public constructor
     }
 
@@ -60,11 +59,11 @@ public class principalFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment principalFragment.
+     * @return A new instance of fragment PrincipalFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static principalFragment newInstance(String param1, String param2) {
-        principalFragment fragment = new principalFragment();
+    public static PrincipalFragment newInstance(String param1, String param2) {
+        PrincipalFragment fragment = new PrincipalFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
