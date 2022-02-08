@@ -14,7 +14,16 @@
         android:text="Agregar nueva ciudad"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Nombre o ZipCode"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
     <EditText
         android:id="@+id/editNombre"
         android:layout_marginEnd="50dp"

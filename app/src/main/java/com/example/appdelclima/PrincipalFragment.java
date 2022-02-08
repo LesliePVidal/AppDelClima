@@ -32,10 +32,10 @@ import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link principalFragment#newInstance} factory method to
+ * Use the {@link PrincipalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class principalFragment extends Fragment {
+public class PrincipalFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,11 +47,17 @@ public class principalFragment extends Fragment {
     public String key = "dec0ab6d6f7fed077cbcb4df58b2680f";
     ArrayList<Clima> listDatos;
     AdapterClima adapter;
+    String nombre;
     RecyclerView recyclerView;
-    TextView temperatura;
+    TextView temperatura, ciudad;
 
-    public principalFragment() {
+    public PrincipalFragment() {
         // Required empty public constructor
+        this.nombre = "Mexicali";
+    }
+
+    public PrincipalFragment(String nombre) {
+        this.nombre = nombre;
     }
 
     /**
@@ -60,11 +66,11 @@ public class principalFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment principalFragment.
+     * @return A new instance of fragment PrincipalFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static principalFragment newInstance(String param1, String param2) {
-        principalFragment fragment = new principalFragment();
+    public static PrincipalFragment newInstance(String param1, String param2) {
+        PrincipalFragment fragment = new PrincipalFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -87,14 +93,16 @@ public class principalFragment extends Fragment {
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_principal, container, false);
         temperatura = vista.findViewById(R.id.txtTemperatura);
+        ciudad = vista.findViewById(R.id.ciudad);
+        ciudad.setText(nombre);
         recyclerView = vista.findViewById(R.id.recyclerView);
-        showClimaTodayNow();
+        showClimaTodayNow(nombre);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return vista;
     }
 
-    private void showDailyForecast() {
-        String tempUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=32.6469&lon=-115.446&exclude=hourly,minutely,current&units=metric&appid="+key;
+    private void showDailyForecast(Double lat, Double lon) {
+        String tempUrl = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly,minutely,current&units=metric&appid="+key;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -105,12 +113,13 @@ public class principalFragment extends Fragment {
                     JSONArray daily = jsonResponse.getJSONArray(ListadoJSON.DAILY);
                     for (int i = 0; i < 6; i++) {
                         JSONObject jsonObject = daily.getJSONObject(i);
+                        Log.d("Array", jsonObject.toString());
                         Long date = jsonObject.getLong(ListadoJSON.DT)*1000;
                         Locale spanish = new Locale("ES", "ES");
                         DateFormat dateFormat = new SimpleDateFormat("EEEE", spanish);
                         dateFormat.setTimeZone(TimeZone.getTimeZone(timezone));
                         String temp = jsonObject.getJSONObject(ListadoJSON.TEMP).getInt(ListadoJSON.DAY)+"°C";
-                        listDatos.add(new Clima("Mexicali",dateFormat.format(date), temp));
+                        listDatos.add(new Clima(nombre,dateFormat.format(date), temp));
                     }
                     adapter = new AdapterClima(listDatos);
                     recyclerView.setAdapter(adapter);
@@ -128,17 +137,20 @@ public class principalFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void showClimaTodayNow() {
-        String tempUrl = "http://api.openweathermap.org/data/2.5/weather?q=Mexicali&units=metric&appid="+key;
+    private void showClimaTodayNow(String nombre) {
+        String tempUrl = "http://api.openweathermap.org/data/2.5/weather?q="+nombre+"&units=metric&appid="+key;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     JSONObject jsonObjectMain = jsonResponse.getJSONObject(ListadoJSON.MAIN);
+                    JSONObject jsonObjectCoord = jsonResponse.getJSONObject(ListadoJSON.COORD);
+                    Double lat = jsonObjectCoord.getDouble(ListadoJSON.LAT);
+                    Double lon = jsonObjectCoord.getDouble(ListadoJSON.LON);
                     String temp = jsonObjectMain.getInt(ListadoJSON.TEMP)+"°C";
                     temperatura.setText(temp);
-                    showDailyForecast();
+                    showDailyForecast(lat, lon);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

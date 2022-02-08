@@ -10,9 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class AdapterCiudades extends RecyclerView.Adapter{
+public class AdapterCiudades extends RecyclerView.Adapter implements View.OnClickListener {
 
     ArrayList<Ciudad> listDatos;
+    private View.OnClickListener listener;
+
+    @Override
+    public void onClick(View view) {
+        if (listener != null) {
+            listener.onClick(view);
+        }
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         final TextView textViewCiudad;
@@ -32,6 +40,7 @@ public class AdapterCiudades extends RecyclerView.Adapter{
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_ciudades, parent, false);
+        view.setOnClickListener(this::onClick);
         return new ViewHolder(view);
     }
     @Override
@@ -43,4 +52,9 @@ public class AdapterCiudades extends RecyclerView.Adapter{
     public int getItemCount() {
         return listDatos.size();
     }
+
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
+
 }
