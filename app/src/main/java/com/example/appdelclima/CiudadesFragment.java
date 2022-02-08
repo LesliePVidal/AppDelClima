@@ -8,13 +8,24 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -115,11 +126,41 @@ public class CiudadesFragment extends Fragment {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardarFichero(nombre.getText().toString()+"\n");
+                boolean resultado;
+                String dato = nombre.getText().toString();
+                try {
+                    String[] partes = dato.split(",");
+                    Integer.parseInt(partes[0]);
+                    resultado = true;
+                } catch (NumberFormatException excepcion) {
+                    resultado = false;
+                }
+                if(resultado){
+                    String tempUrl = "https://api.openweathermap.org/geo/1.0/zip?zip="+dato+"&appid="+key;
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, tempUrl, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String nombre = jsonObject.getString(ListadoJSON.NAME)+"\n";
+                                guardarFichero(nombre);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getContext(),error.toString().trim(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                    requestQueue.add(stringRequest);
+                } else {
+                    String nom = nombre.getText().toString()+"\n";
+                    guardarFichero(nom);
+                }
                 dialogo.dismiss();
-                CiudadesFragment ciudadesFragment = new CiudadesFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().
-                        replace(R.id.layoutCiudades, ciudadesFragment).commit();
             }
         });
     }
@@ -148,10 +189,14 @@ public class CiudadesFragment extends Fragment {
     }
 
     public void guardarFichero(String nombre) {
+        Log.d("Nombre", nombre);
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = getActivity().openFileOutput(FILE_NAME, Context.MODE_APPEND);
             fileOutputStream.write(nombre.getBytes());
+            CiudadesFragment ciudadesFragment = new CiudadesFragment();
+            getActivity().getSupportFragmentManager().beginTransaction().
+                    replace(R.id.layoutCiudades, ciudadesFragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
